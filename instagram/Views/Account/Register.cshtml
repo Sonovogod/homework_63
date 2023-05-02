@@ -1,0 +1,76 @@
+@using instagram.Enums.User
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model instagram.Services.ViewModels.Users.UserRegisterViewModel
+
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "_Layout";
+}
+<div class="container mtStandatr">
+    <h2>Регистрация</h2>
+    <form asp-action="Register" method="post" asp-antiforgery="true" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="userName" class="form-label" asp-for="UserName"></label>
+            <input type="text" class="form-control" id="userName" asp-for="UserName">
+            <span class="text-danger" asp-validation-for="UserName"></span>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label" asp-for="Email"></label>
+            <input type="email" class="form-control" id="exampleInputEmail1" asp-for="Email">
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="mb-3">
+            <label for="pass" class="form-label" asp-for="Password"></label>
+            <input type="password" id="pass" class="form-control" aria-labelledby="passHelp" asp-for="Password">
+            <div id="passHelp" class="form-text">
+                Пароль должен содержать не менее 5 символов, любых.
+            </div>
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+        <div class="mb-3">
+            <label for="confirm" class="form-label" asp-for="ConfirmPassword"></label>
+            <input type="password" class="form-control" id="confirm" asp-for="ConfirmPassword">
+            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+            <div id="passwordHelpBlock" class="form-text">
+                Пароли должны совпадать
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01" asp-for="Avatar"></label>
+            <input type="file" class="form-control" id="inputGroupFile01" name="uploadedFile">
+            <div id="help" class="form-text">минимально 55х55px (jpg/jpen/png)</div>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label" asp-for="Name"></label>
+            <input type="text" class="form-control" id="name" asp-for="Name">
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="mb-3">
+            <label for="userInfo" class="form-label" asp-for="UserInfo"></label>
+            <textarea type="text" class="form-control" id="userInfo" asp-for="UserInfo"></textarea>
+            <span class="text-danger" asp-validation-for="UserInfo"></span>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label" asp-for="PhoneNumber"></label>
+            <input type="text" class="form-control" id="phone" asp-for="PhoneNumber">
+            <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Пол</label>
+            <select class="form-select" id="gender" asp-for="Gender">
+                <option value="@Gender.Female">Женский</option>
+                <option value="@Gender.Male">Мужской</option>
+            </select>
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+    <div class="text-danger" asp-validation-summary="All"></div>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

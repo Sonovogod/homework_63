@@ -1,0 +1,56 @@
+@model instagram.Services.ViewModels.Posts.PostCreateViewModel
+
+
+@{
+    ViewBag.Title = "Добавить пост";
+    Layout = "_LayoutForAuthorizeUser";
+}
+@*<h2>Добавить пост</h2>
+<form asp-action="AddPost" asp-controller="Posts" method="post" asp-antiforgery="true" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupFile01" asp-for="ImgPath"></label>
+        <input type="file" class="form-control" id="inputGroupFile01" name="uploadedFile">
+        <div id="help" class="form-text">минимально 540х540px (jpg/jpen/png)</div>
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label" asp-for="Content"></label>
+        <textarea type="text" class="form-control" id="content" asp-for="Content"></textarea>
+        <span class="text-danger" asp-validation-for="Content"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+<div class="text-danger" asp-validation-summary="All"></div>*@
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Добавить пост</h2>
+            <form asp-action="AddPost" asp-controller="Posts" method="post" asp-antiforgery="true" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="inputGroupFile01" class="form-label">Выберите изображение</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="inputGroupFile01" name="uploadedFile" accept="image/jpeg, image/jpg, image/png">
+                        <label class="input-group-text" for="inputGroupFile01"><i class="bi bi-file-image"></i></label>
+                    </div>
+                    <div id="help" class="form-text">Минимальный размер: 540x540 пикселей (jpg/jpeg/png)</div>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Описание</label>
+                    <textarea class="form-control" id="content" name="Content" rows="4"></textarea>
+                    <span class="text-danger" asp-validation-for="Content"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </div>
+            </form>
+            <div class="text-danger mt-3" asp-validation-summary="All"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

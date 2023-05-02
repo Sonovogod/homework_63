@@ -1,0 +1,83 @@
+@model instagram.Services.ViewModels.Posts.PostFullInfoViewModel
+
+@{
+    ViewBag.Title = "Пост";
+    Layout = "_LayoutForAuthorizeUser";
+}
+
+@{
+    if (Model.PostViewModel is null)
+    {
+        <h2>Пост не найден</h2>
+    }
+    else
+    {
+        <section class="main">
+            <div class="wrapper">
+                <div class="left-col">
+                    <div class="post">
+                        <div class="info">
+                            <div class="user">
+                                <div class="profile-pic">
+                                    <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@Model.PostViewModel.Creator.UserName">
+                                        <img src="@Model.PostViewModel.Creator.Avatar" alt="@Model.PostViewModel.Creator.Id">
+                                    </a>
+                                </div>
+                                <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@Model.PostViewModel.Creator.UserName">
+                                    <p class="username">@Model.PostViewModel.Creator.Name</p>
+                                </a>
+                            </div>
+                        </div>
+                        <img src="@Model.PostViewModel.ImgPath" class="post-image" alt="@Model.PostViewModel.Id">
+                        <div class="post-content">
+                            <div class="reaction-wrapper">
+                                <a asp-action="Like" 
+                                   asp-controller="Posts" 
+                                   asp-route-userName="@User.Identity.Name" 
+                                   asp-route-postId="@Model.PostViewModel.Id" 
+                                   class="myLink">
+                                    <img src="~/img/like.PNG" class="icon" alt="like">
+                                </a>
+                            </div>
+                            <p class="likes">@Model.PostViewModel.Likes.Count Нравится</p>
+                            <p class="likes">@Model.PostViewModel.Comments.Count Комментариев</p>
+                            <p class="description">
+                                <span>
+                                    @Model.PostViewModel.Creator.UserName
+                                </span> 
+                                @Model.PostViewModel.Content
+                            </p>
+                            <p class="post-time">Добавлено @Model.PostViewModel.DateOfCreate</p>
+                        </div>
+                        @if (Model.PostViewModel.Comments.Any())
+                        {
+                            foreach (var comment in Model.PostViewModel.Comments)
+                            {
+                                <div class="mx-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@comment.Commentator.UserName">
+                                            <img src="@comment.Commentator.Avatar" alt="@comment.Commentator.Id" class="rounded-circle mr-2 logoSizer">
+                                        </a>
+                                        <a class="myLink text-reset fw-bolder" asp-action="Profile" asp-controller="Account" asp-route-userName="@comment.Commentator.UserName">
+                                            <p class="m-0 font-weight-bold mx-2">@comment.Commentator.UserName</p>
+                                        </a>
+                                    </div>
+                                    <p class="m-0 pb-2">@comment.Content</p>
+                                </div>
+                            }
+                        }
+                        <div class="comment-wrapper">
+                            <form class="comment-wrapper" type="post" asp-antiforgery="true" asp-action="Comment" asp-controller="Posts">
+                                <img src="~/img/smile.PNG" class="icon" alt="smile">
+                                <input type="text" class="comment-box" asp-for="Comment" placeholder="добавить коммент">
+                                <input type="text" hidden="hidden" asp-for="UserName" value="@User.Identity.Name">
+                                <input type="text" hidden="hidden" asp-for="PostViewModel.Id" value="@Model.PostViewModel.Id">
+                                <button class="comment-btn mx-5">отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

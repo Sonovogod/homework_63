@@ -1,0 +1,92 @@
+@model instagram.Services.ViewModels.Posts.FeedViewModel
+
+@{
+    ViewBag.Title = "Лента";
+    Layout = "_LayoutForAuthorizeUser";
+}
+
+@{
+    if (!Model.Subscribers.Any())
+    {
+        <h2>Вы не видите публикации потому что еще ни на кого не подписаны</h2>
+    }
+    else
+    {
+        if (!Model.Posts.Any())
+        {
+            <h2>В ваших подписках еще нет публикаций</h2>
+        }
+        else
+        {
+            <section class="main">
+                <div class="wrapper">
+                    <div class="left-col">
+                        <div class="status-wrapper">
+                            @{var i = 0;}
+                            @foreach (var subscriber in Model.Subscribers)
+                            {
+                                i++;
+                                if (i>5)
+                                {
+                                    break;
+                                }
+                                <div class="status-card">
+                                    <div class="profile-pic">
+                                        <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@subscriber.UserName">
+                                            <img src="@subscriber.Avatar" alt="@subscriber.Id">
+                                        </a>
+                                    </div>
+                                    <p class="username">@subscriber.UserName</p>
+                                </div>
+                            }
+                        </div>
+                         @foreach (var post in Model.Posts)
+                         {
+                             <div class="post">
+                                 <div class="info">
+                                     <div class="user">
+                                         <div class="profile-pic">
+                                             <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@post.Creator.UserName">
+                                                 <img src="@post.Creator.Avatar" alt="@post.Creator.Id">
+                                             </a>
+                                         </div>
+                                         <a class="myLink" asp-action="Profile" asp-controller="Account" asp-route-userName="@post.Creator.UserName">
+                                             <p class="username">@post.Creator.Name</p>
+                                         </a>
+                                     </div>
+                                 </div>
+                                 <a asp-action="FullPost" asp-controller="Posts" asp-route-postId="@post.Id">
+                                     <img src="@post.ImgPath" class="post-image" alt="@post.Id">
+                                 </a>
+                                 <div class="post-content">
+                                     <div class="reaction-wrapper">
+                                         <a asp-action="Like" 
+                                            asp-controller="Posts" 
+                                            asp-route-userName="@User.Identity.Name" 
+                                            asp-route-postId="@post.Id" 
+                                            asp-route-route="Feed"
+                                            class="myLink">
+                                             <img src="~/img/like.PNG" class="icon" alt="like">
+                                         </a>
+                                         <a class="myLink" asp-action="FullPost" asp-controller="Posts" asp-route-postId="@post.Id">
+                                             <img src="~/img/comment.PNG" class="icon" alt="comment">
+                                         </a>
+                                     </div>
+                                     <p class="likes">@post.Likes.Count Нравится</p>
+                                     <p class="likes">@post.Comments.Count Комментариев</p>
+                                     <p class="description">
+                                         <span>
+                                             @post.Creator.UserName
+                                         </span> 
+                                         @post.Content
+                                     </p>
+                                     <p class="post-time">Добавлено @post.DateOfCreate</p>
+                                 </div>
+                             </div>
+                         }
+                    </div>
+                </div>
+            </section>
+        }
+    }
+}

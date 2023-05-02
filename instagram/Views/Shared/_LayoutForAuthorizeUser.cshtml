@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"] - instagram</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/stile.css" asp-append-version="true"/>
+</head>
+<body>
+<nav class="navbar">
+        <div class="nav-wrapper">
+            <a class="myLink brand-img" asp-area="" asp-controller="Posts" asp-action="Feed">
+                <img src="~/img/logo.PNG" class="brand-img" alt="feed">
+            </a>
+            <form type="post" class="search-box" asp-action="Search" asp-controller="Account" asp-antiforgery="true">
+                <input type="text" class="search-box" placeholder="поиск..." name="key">
+            </form>
+            <div class="nav-items">
+                <a class="myLink" asp-area="" asp-controller="Posts" asp-action="Feed">
+                    <img src="~/img/home.PNG" class="icon" alt="feed">
+                </a>
+                <a class="myLink" asp-controller="Posts" asp-action="AddPost" >
+                    <img src="~/img/add.PNG" class="icon" alt="addPost">
+                </a>
+                <a class="myLink" asp-area="" asp-controller="Account" asp-action="Profile" asp-route-userName="@User.Identity.Name">
+                    <img src="~/img/explore.PNG" class="icon" alt="profile">
+                </a>
+            </div>
+        </div>
+    </nav>
+@RenderBody()
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2023 - instagram - <a asp-area="" asp-controller="" asp-action="">Privacy</a>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

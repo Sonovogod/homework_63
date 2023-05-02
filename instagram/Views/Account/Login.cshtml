@@ -1,0 +1,32 @@
+@model instagram.Services.ViewModels.Users.UserLoginViewModel
+
+@{
+    ViewBag.Title = "Вход";
+    Layout = "_Layout";
+}
+<div class="container mtStandatr">
+    <h2>Выполните вход</h2>
+    <form method="post" asp-action="Login" asp-controller="Account" asp-antiforgery="true">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label" asp-for="EmailOrLogin"></label>
+            <input type="text" class="form-control" id="exampleInputEmail1" asp-for="EmailOrLogin">
+            <span class="text-danger" asp-validation-for="EmailOrLogin"></span>
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword5" class="form-label" asp-for="Password"></label>
+            <input type="password" id="inputPassword5" class="form-control" asp-for="Password">
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Войти</button>
+            <a asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+        </div>
+    </form>
+    <span class="text-danger">@Html.ValidationMessage("incorrectAuthentication")</span>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
