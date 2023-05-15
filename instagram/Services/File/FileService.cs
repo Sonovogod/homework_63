@@ -40,39 +40,6 @@ public class FileService : IFileService
             return false;
         }
     }
-
-    /*public string SaveImage(IFormFile uploadedFile, ImageType imageType)
-    {
-        var imageProfile = _imageProfiles.FirstOrDefault(profile => profile.ImageType == imageType);
-        var fileExtension = Path.GetExtension(uploadedFile.FileName);
-        Image image = Image.Load(uploadedFile.OpenReadStream());
-        var folderPath = Path.Combine(_hostEnvironment.WebRootPath, imageProfile.Folder);
-
-        if (!Directory.Exists(folderPath))
-            Directory.CreateDirectory(folderPath);
-        var fileName = $"{Path.GetFileNameWithoutExtension(Path.GetRandomFileName())}{fileExtension}";
-        string filePath = Path.Combine(folderPath, fileName);
-
-        var resizeOption = new ResizeOptions()
-        {
-            Mode = ResizeMode.Min,
-            Size = new Size(imageProfile.Width)
-        };
-        image.Mutate(action=> action.Resize(resizeOption));
-        if (image.Width < imageProfile.Width || image.Height < imageProfile.Height)
-        {
-            var widthDifference = image.Width - imageProfile.Width;
-            var heightDifference = image.Height - imageProfile.Height;
-            var x = widthDifference / 2;
-            var y = heightDifference / 2;
-            var rectangle = new Rectangle(x, y, imageProfile.Width, imageProfile.Height);
-        
-            image.Mutate(action => action.Crop(rectangle));
-        }
-        
-        image.Save(filePath, new JpegEncoder(){Quality = 100});
-        return Path.Combine(@$"\{imageProfile.Folder}", fileName);
-    }*/
     public string SaveImage(IFormFile uploadedFile, ImageType imageType)
     {
         var imageProfile = _imageProfiles.FirstOrDefault(profile => profile.ImageType == imageType);

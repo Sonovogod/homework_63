@@ -5,22 +5,6 @@
     ViewBag.Title = "Добавить пост";
     Layout = "_LayoutForAuthorizeUser";
 }
-@*<h2>Добавить пост</h2>
-<form asp-action="AddPost" asp-controller="Posts" method="post" asp-antiforgery="true" enctype="multipart/form-data">
-    <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupFile01" asp-for="ImgPath"></label>
-        <input type="file" class="form-control" id="inputGroupFile01" name="uploadedFile">
-        <div id="help" class="form-text">минимально 540х540px (jpg/jpen/png)</div>
-    </div>
-    <div class="mb-3">
-        <label for="content" class="form-label" asp-for="Content"></label>
-        <textarea type="text" class="form-control" id="content" asp-for="Content"></textarea>
-        <span class="text-danger" asp-validation-for="Content"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Создать</button>
-</form>
-<div class="text-danger" asp-validation-summary="All"></div>*@
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">

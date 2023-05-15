@@ -9,27 +9,29 @@
 </head>
 <body>
 <nav class="navbar">
-        <div class="nav-wrapper">
-            <a class="myLink brand-img" asp-area="" asp-controller="Posts" asp-action="Feed">
-                <img src="~/img/logo.PNG" class="brand-img" alt="feed">
+    <div class="nav-wrapper">
+        <a class="myLink brand-img" asp-area="" asp-controller="Posts" asp-action="Feed">
+            <img src="~/img/logo.PNG" class="brand-img" alt="feed">
+        </a>
+        <form type="post" class="search-box" asp-action="Search" asp-controller="Account" asp-antiforgery="true">
+            <input type="text" class="search-box" placeholder="поиск..." name="key">
+        </form>
+        <div class="nav-items">
+            <a class="myLink" asp-area="" asp-controller="Posts" asp-action="Feed">
+                <img src="~/img/home.PNG" class="icon" alt="feed">
             </a>
-            <form type="post" class="search-box" asp-action="Search" asp-controller="Account" asp-antiforgery="true">
-                <input type="text" class="search-box" placeholder="поиск..." name="key">
-            </form>
-            <div class="nav-items">
-                <a class="myLink" asp-area="" asp-controller="Posts" asp-action="Feed">
-                    <img src="~/img/home.PNG" class="icon" alt="feed">
-                </a>
-                <a class="myLink" asp-controller="Posts" asp-action="AddPost" >
-                    <img src="~/img/add.PNG" class="icon" alt="addPost">
-                </a>
-                <a class="myLink" asp-area="" asp-controller="Account" asp-action="Profile" asp-route-userName="@User.Identity.Name">
-                    <img src="~/img/explore.PNG" class="icon" alt="profile">
-                </a>
-            </div>
+            <a class="myLink" asp-controller="Posts" asp-action="AddPost" >
+                <img src="~/img/add.PNG" class="icon" alt="addPost">
+            </a>
+            <a class="myLink" asp-area="" asp-controller="Account" asp-action="Profile" asp-route-userName="@User.Identity.Name">
+                <img src="~/img/explore.PNG" class="icon" alt="profile">
+            </a>
         </div>
-    </nav>
-@RenderBody()
+    </div>
+</nav>
+<div class="mainContainer mt-5">
+    @RenderBody()
+</div>
 <footer class="border-top footer text-muted">
     <div class="container">
         &copy; 2023 - instagram - <a asp-area="" asp-controller="" asp-action="">Privacy</a>

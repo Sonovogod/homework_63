@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace instagram.Controllers;
 
+[Authorize]
 public class PostsController : Controller
 {
     private readonly IFileService _fileService;
@@ -22,7 +23,6 @@ public class PostsController : Controller
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult AddPost()
     {
         PostCreateViewModel model = new PostCreateViewModel();
@@ -30,7 +30,6 @@ public class PostsController : Controller
     }
     
     [HttpPost]
-    [Authorize]
     public IActionResult AddPost(PostCreateViewModel model, IFormFile uploadedFile)
     {
         bool fileValid = _fileService.FileValid(uploadedFile, ImageType.Post);
@@ -52,7 +51,6 @@ public class PostsController : Controller
     }
     
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> Feed()
     {
        User? totalUser = await _accountService.FindByEmailOrLoginAsync(User.Identity.Name);
@@ -80,7 +78,6 @@ public class PostsController : Controller
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult FullPost(int postId)
     {
         Post? post = _postService.GetPostById(postId);
@@ -96,7 +93,6 @@ public class PostsController : Controller
     }
 
     [HttpGet]
-    [Authorize]
     public IActionResult Like(string userName, int postId, string route = "FullPost")
     {
         if (User.Identity.Name.ToUpper().Equals(userName.ToUpper()))
@@ -108,7 +104,6 @@ public class PostsController : Controller
     }
 
     [HttpPost]
-    [Authorize]
     [ValidateAntiForgeryToken]
     public IActionResult Comment(PostFullInfoViewModel model)
     {
@@ -117,7 +112,9 @@ public class PostsController : Controller
         int postId = model.PostViewModel.Id;
         if (User.Identity.Name.ToUpper().Equals(model.UserName.ToUpper()))
         {
-            _postService.AddComment(comment, userName, postId);
+            if (!string.IsNullOrEmpty(comment))
+                _postService.AddComment(comment, userName, postId);
+            
             return RedirectToAction("FullPost", "Posts", new { postId = model.PostViewModel.Id });
         }
 

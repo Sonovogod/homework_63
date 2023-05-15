@@ -26,6 +26,8 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult Login(string? returnUrl)
     {
+        if (User.Identity.IsAuthenticated)
+            return RedirectToAction("Feed", "Posts");
         return View(new UserLoginViewModel {ReturnUrl = returnUrl});
     }
     
@@ -33,6 +35,8 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Login(UserLoginViewModel model)
     {
+        if (User.Identity.IsAuthenticated)
+            return RedirectToAction("Feed", "Posts");
         if (ModelState.IsValid)
         {
             User? user = await _accountService.FindByEmailOrLoginAsync(model.EmailOrLogin);

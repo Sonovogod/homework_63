@@ -378,3 +378,6 @@ body{
 .mtStandatr{
     margin-top: 100px;
 }
+.mainContainer{
+    min-height: 1000px;
+}

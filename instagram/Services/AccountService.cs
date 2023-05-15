@@ -116,9 +116,9 @@ public class AccountService : IAccountService
             .Include(x => x.Subscriptions)
             .Include(x => x.Followers)
             .Include(x => x.Posts)
-            .Where(x=> x.UserName != null && x.UserName.Contains(key) || 
-                       x.Email != null && x.Email.Contains(key)||
-                       x.Name != null && x.Name.Contains(key))
+            .Where(x=> (x.UserName != null && EF.Functions.Like(x.UserName.ToLower(), $"%{key.ToLower()}%")) || 
+                            (x.Email != null && EF.Functions.Like(x.Email.ToLower(), $"%{key.ToLower()}%")) ||
+                            (x.Name != null && EF.Functions.Like(x.Name.ToLower(), $"%{key.ToLower()}%")))
             .ToListAsync();
         return users;
     }

@@ -35,12 +35,12 @@
       <ul>
       <li class="text-secondary"><span class="profile-stat-count text-secondary">@Model.Posts.Count</span> посты</li>
         <li>
-          <a class="myLink text-secondary" asp-action="GetFollowers" asp-controller="Account" asp-route-userName="@User.Identity.Name">
+          <a class="myLink text-secondary" asp-action="GetFollowers" asp-controller="Account" asp-route-userName="@Model.UserName">
             <span class="profile-stat-count">@Model.Followers.Count</span> подписчики
           </a>
         </li>
         <li>
-          <a class="myLink text-secondary" asp-action="GetSubscribe" asp-controller="Account" asp-route-userName="@User.Identity.Name">
+          <a class="myLink text-secondary" asp-action="GetSubscribe" asp-controller="Account" asp-route-userName="@Model.UserName">
             <span class="profile-stat-count">@Model.Subscriptions.Count</span> подписки
           </a>
         </li>
