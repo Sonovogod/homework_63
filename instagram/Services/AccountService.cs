@@ -69,7 +69,7 @@ public class AccountService : IAccountService
         return user;
     }
 
-    public async Task ToFollow(string userName, string subscribeName)
+    public async Task<bool> ToFollow(string userName, string subscribeName)
     {
         User? user = _instagramContext.Users
             .FirstOrDefault(x => x.UserName != null && x.UserName.Equals(userName));
@@ -99,8 +99,10 @@ public class AccountService : IAccountService
                 };
                 await _instagramContext.UserSubscriptions.AddAsync(newSubscription);
                 await _instagramContext.UserFollowers.AddAsync(newFollower);
+                await _instagramContext.SaveChangesAsync();
+                return true;
             }
-            else if (existingSubscription != null && existingFollower != null)
+            if (existingSubscription != null && existingFollower != null)
             {
                 _instagramContext.UserSubscriptions.Remove(existingSubscription);
                 _instagramContext.UserFollowers.Remove(existingFollower);
@@ -108,6 +110,7 @@ public class AccountService : IAccountService
 
             await _instagramContext.SaveChangesAsync();
         }
+        return false;
     }
 
     public async Task<List<User>> Search(string key)

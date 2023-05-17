@@ -137,10 +137,15 @@ public class AccountController : Controller
             string userName = User.Identity.Name;
             if ( userName.ToLower() != followerName.ToLower() )
             {
-                await _accountService.ToFollow(followerName, userName);
+                bool isFollow = await _accountService.ToFollow(followerName, userName);
                 var user = await _accountService.FindByEmailOrLoginAsync(followerName);
-                return Ok(user.Followers.Count);
-                /*return RedirectToAction("Profile", new { userName = followerName });*/
+
+                FollowAnswerViewModel model = new FollowAnswerViewModel()
+                {
+                    FollowerCount = user.Followers.Count,
+                    IsFollow = isFollow
+                };
+                return Ok(model);
             }
             ViewData.Add("totalUser", totalUserId);
         }

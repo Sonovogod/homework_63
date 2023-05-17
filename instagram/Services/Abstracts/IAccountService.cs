@@ -10,7 +10,7 @@ public interface IAccountService
     public bool UserEmailUnique(string email);
     public Task<IdentityResult> Add(UserRegisterViewModel model);
     public Task<User?> FindByEmailOrLoginAsync(string key);
-    Task ToFollow(string userName, string subscribeName);
+    Task<bool> ToFollow(string userName, string subscribeName);
     Task<List<User>> Search(string key);
     Task<List<User>> GetFollowers(string userName);
     Task<List<User>> GetSubscribe(string userName);
