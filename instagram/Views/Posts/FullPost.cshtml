@@ -31,16 +31,12 @@
                         <img src="@Model.PostViewModel.ImgPath" class="post-image" alt="@Model.PostViewModel.Id">
                         <div class="post-content">
                             <div class="reaction-wrapper">
-                                <a asp-action="Like" 
-                                   asp-controller="Posts" 
-                                   asp-route-userName="@User.Identity.Name" 
-                                   asp-route-postId="@Model.PostViewModel.Id" 
-                                   class="myLink">
+                                <button class="myLink likePost reset-button-style" id="@Model.PostViewModel.Id">
                                     <img src="~/img/like.PNG" class="icon" alt="like">
-                                </a>
+                                </button>
                             </div>
-                            <p class="likes">@Model.PostViewModel.Likes.Count Нравится</p>
-                            <p class="likes">@Model.PostViewModel.Comments.Count Комментариев</p>
+                            <p class="likesFollowers" id="likesCount-@Model.PostViewModel.Id">@Model.PostViewModel.Likes.Count Нравится</p>
+                            <p class="likesFollowers">@Model.PostViewModel.Comments.Count Комментариев</p>
                             <p class="description">
                                 <span>
                                     @Model.PostViewModel.Creator.UserName

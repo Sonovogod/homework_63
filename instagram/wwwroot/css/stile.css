@@ -207,7 +207,7 @@ body{
     padding: 20px;
 }
 
-.likes{
+.likesFollowers{
     font-weight: bold;
 }
 
@@ -380,4 +380,10 @@ body{
 }
 .mainContainer{
     min-height: 1000px;
+}
+.reset-button-style{
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: white;
 }

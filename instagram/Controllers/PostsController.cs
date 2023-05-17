@@ -93,12 +93,14 @@ public class PostsController : Controller
     }
 
     [HttpGet]
-    public IActionResult Like(string userName, int postId, string route = "FullPost")
+    public IActionResult Like(int postId)
     {
-        if (User.Identity.Name.ToUpper().Equals(userName.ToUpper()))
+        string userName = User.Identity.Name;
+        if (!string.IsNullOrEmpty(userName))
         {
+            Post? post = _postService.GetPostById(postId);
             _postService.Like(userName, postId);
-            return RedirectToAction(route, "Posts", new { postId = postId });
+            return Ok(post.Likes.Count);
         }
         return NotFound();
     }

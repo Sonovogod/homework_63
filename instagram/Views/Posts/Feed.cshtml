@@ -60,20 +60,15 @@
                                  </a>
                                  <div class="post-content">
                                      <div class="reaction-wrapper">
-                                         <a asp-action="Like" 
-                                            asp-controller="Posts" 
-                                            asp-route-userName="@User.Identity.Name" 
-                                            asp-route-postId="@post.Id" 
-                                            asp-route-route="Feed"
-                                            class="myLink">
+                                         <button class="myLink likePost reset-button-style" id="@post.Id">
                                              <img src="~/img/like.PNG" class="icon" alt="like">
-                                         </a>
+                                         </button>
                                          <a class="myLink" asp-action="FullPost" asp-controller="Posts" asp-route-postId="@post.Id">
                                              <img src="~/img/comment.PNG" class="icon" alt="comment">
                                          </a>
                                      </div>
-                                     <p class="likes">@post.Likes.Count Нравится</p>
-                                     <p class="likes">@post.Comments.Count Комментариев</p>
+                                     <p id="likesCount-@post.Id" class="likesFollowers">@post.Likes.Count Нравится</p>
+                                     <p class="likesFollowers">@post.Comments.Count Комментариев</p>
                                      <p class="description">
                                          <span>
                                              @post.Creator.UserName
