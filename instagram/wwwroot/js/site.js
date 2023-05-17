@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(() => {
+    $('.followButton').on('click', function (event){
+        event.preventDefault();
+        const followerName = $(this).attr('accountName');
+        console.log(followerName);
 
-// Write your JavaScript code.
+        $.ajax({
+            type: 'GET',
+            url: '/Account/Follow/',
+            data: { followerName: followerName },
+            success: function (response){
+                $('#followersCount').text(response);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    });
+})

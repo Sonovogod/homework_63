@@ -23,11 +23,13 @@
               string? totalUserId = ViewData.TryGetValue("totalUser", out var value) ? value as string : null;
                 @if (Model.Followers.Any(x => x.FollowerId == totalUserId))
                 {
-                  <a class="btn profile-edit-btn" asp-controller="Account" asp-action="Follow" asp-route-followerName="@Model.UserName">Отписаться</a>
+                  @*<a class="btn profile-edit-btn" asp-controller="Account" asp-action="Follow" asp-route-followerName="@Model.UserName">Отписаться</a>*@
+                  <button class="btn profile-edit-btn followButton" accountName="@Model.UserName">Отписаться</button>
                 }
                 else
                 {
-                  <a class="btn profile-edit-btn" asp-controller="Account" asp-action="Follow" asp-route-followerName="@Model.UserName">Подписаться</a>
+                  @*<a class="btn profile-edit-btn" asp-controller="Account" asp-action="Follow" asp-route-followerName="@Model.UserName">Подписаться</a>*@
+                  <button class="btn profile-edit-btn followButton" accountName="@Model.UserName">Подписаться</button>
                 }
             }
     </div>
@@ -36,12 +38,12 @@
       <li class="text-secondary"><span class="profile-stat-count text-secondary">@Model.Posts.Count</span> посты</li>
         <li>
           <a class="myLink text-secondary" asp-action="GetFollowers" asp-controller="Account" asp-route-userName="@Model.UserName">
-            <span class="profile-stat-count">@Model.Followers.Count</span> подписчики
+            <span id="followersCount" class="profile-stat-count">@Model.Followers.Count</span> подписчики
           </a>
         </li>
         <li>
           <a class="myLink text-secondary" asp-action="GetSubscribe" asp-controller="Account" asp-route-userName="@Model.UserName">
-            <span class="profile-stat-count">@Model.Subscriptions.Count</span> подписки
+            <span id="subscribesCount" class="profile-stat-count">@Model.Subscriptions.Count</span> подписки
           </a>
         </li>
     </ul>

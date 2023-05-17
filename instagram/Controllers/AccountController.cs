@@ -138,7 +138,9 @@ public class AccountController : Controller
             if ( userName.ToLower() != followerName.ToLower() )
             {
                 await _accountService.ToFollow(followerName, userName);
-                return RedirectToAction("Profile", new { userName = followerName });
+                var user = await _accountService.FindByEmailOrLoginAsync(followerName);
+                return Ok(user.Followers.Count);
+                /*return RedirectToAction("Profile", new { userName = followerName });*/
             }
             ViewData.Add("totalUser", totalUserId);
         }
