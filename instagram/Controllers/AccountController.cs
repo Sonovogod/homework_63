@@ -127,8 +127,9 @@ public class AccountController : Controller
         return NotFound();
     }
 
-    [HttpGet]
+    [HttpPost]
     [Authorize]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Follow(string? followerName)
     {
         if (!string.IsNullOrEmpty(followerName))

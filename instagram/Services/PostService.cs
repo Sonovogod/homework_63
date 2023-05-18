@@ -88,4 +88,15 @@ public class PostService : IPostService
             _db.SaveChanges();
         }
     }
+    
+    public void EditPost(int postId, string content)
+    {
+        Post? post = GetPostById(postId);
+        if (post is not null)
+        {
+            post.Content = content;
+            _db.Posts.Update(post);
+            _db.SaveChanges();
+        }
+    }
 }

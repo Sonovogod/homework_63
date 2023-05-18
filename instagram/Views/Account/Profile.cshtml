@@ -55,44 +55,22 @@
   <div class="row justify-content-center mt-5">
     @foreach(var post in Model.Posts)
     {
-      <div class="col-md-4 mb-4" id="profilePost-@post.Id">
+      <div class="col-md-4 mb-4">
         <a asp-action="FullPost" asp-controller="Posts" asp-route-postId="@post.Id">
           <div class="card">
             <img src="@post.ImgPath" class="card-img-top" alt="@post.Id">
           </div>
         </a>
+        <div id="profilePost-@post.Id" class="w-100">
+          <textarea class="w-100 p-2" disabled="disabled">@post.Content</textarea>
+        </div>
         @if (User.Identity.Name == Model.UserName)
-          {
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Open modal</button>
-            <button type="button" accountName="@Model.UserName" postId="@post.Id" class="btn btn-danger btnPostDelete">Удалить запись</button>
-          }
+        {
+          <button id="editPostButton-@post.Id" accountName="@Model.UserName" type="button" class="btn btn-primary editPostBtn m-2" postId="@post.Id">Редактировать</button>
+          <button id="savePostButton-@post.Id" type="button" class="btn btn-primary m-2" hidden="hidden">Сохранить</button>
+          <button type="button" accountName="@Model.UserName" postId="@post.Id" class="btn btn-danger btnPostDelete m-2">Удалить запись</button>
+        }
       </div>
     }
-  </div>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
-    </div>
   </div>
 </div>

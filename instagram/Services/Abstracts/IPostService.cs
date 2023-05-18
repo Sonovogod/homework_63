@@ -10,4 +10,5 @@ public interface IPostService
     void Like(string userName, int postId);
     void AddComment(string modelComment, string modelUserName, int postId);
     public void DeletePost(int postId);
+    void EditPost(int postId, string content);
 }

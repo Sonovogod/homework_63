@@ -10,7 +10,7 @@ $(document).ready(() => {
         console.log(followerName);
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '/Account/Follow/',
             data: { followerName: followerName },
             success: function (response){
@@ -37,7 +37,7 @@ $(document).ready(() => {
         console.log(postId);
         
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '/Posts/Like/',
             data: { postId: postId},
             success: function (response){
@@ -53,13 +53,13 @@ $(document).ready(() => {
     $('.btnPostDelete').on('click', function (event){
         event.preventDefault();
         const postId = $(this).attr('postId');
-        const accountName = $(this).attr('accountName');
+        const postOwner = $(this).attr('accountName');
         console.log(postId);
         
         $.ajax({
             type: 'POST',
             url: '/Posts/Delete/',
-            data: { postId: postId },
+            data: { postId: postId, postOwner: postOwner },
             success: function (response){
                 console.log(response);
                 $('#profilePost-' + postId).remove();
@@ -70,4 +70,40 @@ $(document).ready(() => {
             }
         })
     })
+
+    $(document).on('click', '.editPostBtn', function(event) {
+        event.preventDefault();
+        const postId = $(this).attr('postId');
+        const postOwner = $(this).attr('accountName');
+        const saveButton = $('#savePostButton-' + postId);
+        const editField = $('#profilePost-' + postId + ' textarea');
+
+        editField.prop('disabled', false);
+        saveButton.removeAttr('hidden');
+
+        $(document).on('click', '#savePostButton-' + postId, function(event) {
+            event.preventDefault();
+            const content = editField.val();
+            const PostEditViewModel = {
+                content: content,
+                postId: postId,
+                postOwner: postOwner
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Posts/EditPost/',
+                data: PostEditViewModel,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
+
+            editField.prop('disabled', true);
+            saveButton.attr('hidden', 'hidden');
+        });
+    });
 })

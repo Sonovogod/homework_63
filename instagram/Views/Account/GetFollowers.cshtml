@@ -27,11 +27,11 @@
                                     string? totalUserId = ViewData.TryGetValue("totalUser", out var value) ? value as string : null;
                                     @if (user.Followers.Any(x => x.FollowerId == totalUserId))
                                     {
-                                        <a class="btn btn-info" asp-controller="Account" asp-action="Follow" asp-route-followerName="@user.UserName">Отписаться</a>
+                                        <button class="btn btn-info followButton btn-@user.UserName" accountName="@user.UserName">Отписаться</button>
                                     }
                                     else
                                     {
-                                        <a class="btn btn-info" asp-controller="Account" asp-action="Follow" asp-route-followerName="@user.UserName">Подписаться</a>
+                                        <button class="btn btn-info followButton btn-@user.UserName" accountName="@user.UserName">Подписаться</button>
                                     }
                                 }
                             </div>

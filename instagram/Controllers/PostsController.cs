@@ -92,7 +92,8 @@ public class PostsController : Controller
         return View(model);
     }
 
-    [HttpGet]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Like(int postId)
     {
         string userName = User.Identity.Name;
@@ -125,16 +126,32 @@ public class PostsController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int postId)
+    public IActionResult Delete(int postId, string postOwner)
     {
         string userName = User.Identity.Name;
         Post? post = _postService.GetPostById(postId);
-        if (!string.IsNullOrEmpty(userName) && post is not null)
+        if (userName.ToLower().Equals(postOwner.ToLower()) && post is not null)
         {
             _postService.DeletePost(postId);
             User? user = _accountService.GetByUserName(User.Identity.Name);
             int countPost = user.Posts.Count(x => x.IsDelete == false);
             return Ok(countPost);
+        }
+        return NotFound();
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditPost(PostEditViewModel model)
+    {
+        int postId = model.PostId;
+        string postOwner = model.PostOwner;
+        string userName = User.Identity.Name;
+        
+        if (userName.ToLower().Equals(postOwner.ToLower()))
+        {
+            _postService.EditPost(postId, model.Content);
+            return Ok();
         }
         return NotFound();
     }
