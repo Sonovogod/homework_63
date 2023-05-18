@@ -77,4 +77,15 @@ public class PostService : IPostService
              _db.SaveChanges();
         }
     }
+
+    public void DeletePost(int postId)
+    {
+        Post? post = GetPostById(postId);
+        if (post is not null)
+        {
+            post.IsDelete = true;
+            _db.Posts.Update(post);
+            _db.SaveChanges();
+        }
+    }
 }

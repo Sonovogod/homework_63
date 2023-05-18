@@ -9,4 +9,5 @@ public interface IPostService
     Post? GetPostById(int postId);
     void Like(string userName, int postId);
     void AddComment(string modelComment, string modelUserName, int postId);
+    public void DeletePost(int postId);
 }

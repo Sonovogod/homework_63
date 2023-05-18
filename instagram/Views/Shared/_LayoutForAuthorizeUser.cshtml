@@ -30,6 +30,7 @@
     </div>
 </nav>
 <div class="mainContainer mt-5">
+    @Html.AntiForgeryToken()
     @RenderBody()
 </div>
 <footer class="border-top footer text-muted">

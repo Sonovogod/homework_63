@@ -122,4 +122,20 @@ public class PostsController : Controller
 
         return NotFound();
     }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Delete(int postId)
+    {
+        string userName = User.Identity.Name;
+        Post? post = _postService.GetPostById(postId);
+        if (!string.IsNullOrEmpty(userName) && post is not null)
+        {
+            _postService.DeletePost(postId);
+            User? user = _accountService.GetByUserName(User.Identity.Name);
+            int countPost = user.Posts.Count(x => x.IsDelete == false);
+            return Ok(countPost);
+        }
+        return NotFound();
+    }
 }
